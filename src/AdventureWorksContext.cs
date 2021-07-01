@@ -7,10 +7,6 @@ namespace AdventureWorks.Domain
 {
     public partial class AdventureWorksContext : DbContext
     {
-        public AdventureWorksContext()
-        {
-        }
-
         public AdventureWorksContext(DbContextOptions<AdventureWorksContext> options)
             : base(options)
         {
