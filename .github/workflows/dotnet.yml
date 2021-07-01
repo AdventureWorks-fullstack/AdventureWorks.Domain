@@ -1,0 +1,31 @@
+name: .NET
+
+on:
+  push:
+    branches: 
+    - none
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        source-url: https://nuget.pkg.github.com/AdventureWorks-fullstack/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Pack
+      run: dotnet pack src/src.csproj --output nuget-packages --configuration Release
+    - name: Push
+      run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/AdventureWorks-fullstack/index.json
