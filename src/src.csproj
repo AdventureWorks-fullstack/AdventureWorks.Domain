@@ -5,7 +5,8 @@
     <RootNamespace>AdventureWorks.Domain</RootNamespace>
     <AssemblyName>AdventureWorks.Domain</AssemblyName>
     <PackgeId>AdventureWorks.Domain</PackgeId>
-    <Version>1.0.0</Version>
+    <VersionPrefix>1.0.</VersionPrefix>
+    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <RepositoryUrl>https://github.com/AdventureWorks-fullstack/AdventureWorks.Domain.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
