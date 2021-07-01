@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build ./src/src.csproj --no-restore
     - name: Source
-      run: dotnet nuget add source --name github "https://nuget.pkg.github.com/AdventureWorks-fullstack/index.json"
+      run: dotnet nuget add source  --username Stahhl --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/AdventureWorks-fullstack/index.json"
     - name: Pack
       run: dotnet pack ./src/src.csproj --configuration Release
     - name: Push
