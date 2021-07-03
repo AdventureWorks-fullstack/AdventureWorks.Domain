@@ -67,5 +67,6 @@ namespace AdventureWorks.Domain.Models
         public virtual ICollection<SpecialOfferProduct> SpecialOfferProducts { get; set; }
         public virtual ICollection<TransactionHistory> TransactionHistories { get; set; }
         public virtual ICollection<WorkOrder> WorkOrders { get; set; }
+        public virtual ICollection<SalesOrderDetail> SalesOrderDetails { get; set; }
     }
 }

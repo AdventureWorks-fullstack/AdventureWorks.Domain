@@ -10,7 +10,7 @@ namespace test.integration
         const string connectionString = "Server=localhost,1433;Database=AdventureWorks;User Id=SA;Password=my_password";
 
         [Fact]
-        public void GetProductsTests()
+        public void GetProductsTest()
         {
             var context = AdventureWorksContextFactory.GetContext(connectionString);
             var products = context.Products.Include(x => x.ProductModel).ToList();
@@ -21,6 +21,19 @@ namespace test.integration
 
             Assert.NotNull(models);
             Assert.True(models.Count() > 0);
+        }
+        [Fact]
+        public void GetSalesTest()
+        {
+            var context = AdventureWorksContextFactory.GetContext(connectionString);
+            var sales = context.SalesOrderDetails.Include(x => x.Product);
+            var products = sales.Where(x => x.Product != null).Select(x => x.Product).ToList();
+
+            Assert.NotNull(sales);
+            Assert.True(sales.Count() > 0);
+
+            Assert.NotNull(products);
+            Assert.True(products.Count() > 0);
         }
     }
 }

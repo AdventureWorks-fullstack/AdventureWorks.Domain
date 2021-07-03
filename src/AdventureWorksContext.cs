@@ -7,6 +7,8 @@ namespace AdventureWorks.Domain
 {
     public partial class AdventureWorksContext : DbContext
     {
+        public AdventureWorksContext() { }
+
         public AdventureWorksContext(DbContextOptions<AdventureWorksContext> options)
             : base(options)
         {
@@ -2243,6 +2245,10 @@ namespace AdventureWorks.Domain
                 entity.HasOne(d => d.SalesOrder)
                     .WithMany(p => p.SalesOrderDetails)
                     .HasForeignKey(d => d.SalesOrderId);
+
+                entity.HasOne(d => d.Product)
+                .WithMany(p => p.SalesOrderDetails)
+                .HasForeignKey(d => d.ProductId);
 
                 entity.HasOne(d => d.SpecialOfferProduct)
                     .WithMany(p => p.SalesOrderDetails)
