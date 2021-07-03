@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Lookup table containing standard ISO currencies.
     public partial class Currency
     {
         public Currency()

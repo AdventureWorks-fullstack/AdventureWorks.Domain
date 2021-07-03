@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Products sold or used in the manfacturing of sold products.
     public partial class Product
     {
         public Product()

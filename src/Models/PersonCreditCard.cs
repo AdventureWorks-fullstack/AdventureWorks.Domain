@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Cross-reference table mapping people to their credit card information in the CreditCard table. 
     public partial class PersonCreditCard
     {
         public int BusinessEntityId { get; set; }

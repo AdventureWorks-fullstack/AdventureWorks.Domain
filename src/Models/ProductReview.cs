@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Customer reviews of products they have purchased.
     public partial class ProductReview
     {
         public int ProductReviewId { get; set; }

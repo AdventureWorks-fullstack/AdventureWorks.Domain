@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Product model classification.
     public partial class ProductModel
     {
         public ProductModel()

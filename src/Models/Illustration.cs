@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Bicycle assembly diagrams.
     public partial class Illustration
     {
         public Illustration()

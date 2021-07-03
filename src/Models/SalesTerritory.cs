@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Sales territory lookup table.
     public partial class SalesTerritory
     {
         public SalesTerritory()

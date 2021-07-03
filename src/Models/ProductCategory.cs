@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // High-level product categorization.
     public partial class ProductCategory
     {
         public ProductCategory()

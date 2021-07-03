@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Work shift lookup table.
     public partial class Shift
     {
         public Shift()

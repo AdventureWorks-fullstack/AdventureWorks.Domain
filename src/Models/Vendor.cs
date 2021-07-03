@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Companies from whom Adventure Works Cycles purchases parts or other goods.
     public partial class Vendor
     {
         public Vendor()

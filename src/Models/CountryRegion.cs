@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Lookup table containing the ISO standard codes for countries and regions.
     public partial class CountryRegion
     {
         public CountryRegion()

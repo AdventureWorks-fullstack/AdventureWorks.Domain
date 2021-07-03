@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Current version number of the AdventureWorks 2012 sample database.
     public partial class AwbuildVersion
     {
         public byte SystemInformationId { get; set; }

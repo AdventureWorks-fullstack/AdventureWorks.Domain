@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // One way hashed authentication information
     public partial class Password
     {
         public int BusinessEntityId { get; set; }

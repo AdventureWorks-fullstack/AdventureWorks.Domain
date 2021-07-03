@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts.
     public partial class Person
     {
         public Person()

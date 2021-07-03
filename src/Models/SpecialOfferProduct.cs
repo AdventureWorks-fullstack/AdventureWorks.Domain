@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Cross-reference table mapping products to special offer discounts.
     public partial class SpecialOfferProduct
     {
         public SpecialOfferProduct()

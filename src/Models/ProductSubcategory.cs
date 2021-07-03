@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Product subcategories. See ProductCategory table.
     public partial class ProductSubcategory
     {
         public ProductSubcategory()

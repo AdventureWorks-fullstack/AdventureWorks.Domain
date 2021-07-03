@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // State and province lookup table.
     public partial class StateProvince
     {
         public StateProvince()

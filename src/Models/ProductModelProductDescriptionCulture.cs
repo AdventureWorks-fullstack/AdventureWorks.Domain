@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Cross-reference table mapping product descriptions and the language the description is written in.
     public partial class ProductModelProductDescriptionCulture
     {
         public int ProductModelId { get; set; }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Type of phone number of a person.
     public partial class PhoneNumberType
     {
         public PhoneNumberType()

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Sales representative transfers to other sales territories.
     public partial class SalesTerritoryHistory
     {
         public int BusinessEntityId { get; set; }

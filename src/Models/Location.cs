@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Product inventory and manufacturing locations.
     public partial class Location
     {
         public Location()

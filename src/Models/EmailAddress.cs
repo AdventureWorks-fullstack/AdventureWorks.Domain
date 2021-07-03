@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Where to send a person email.
     public partial class EmailAddress
     {
         public int BusinessEntityId { get; set; }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Work order details.
     public partial class WorkOrderRouting
     {
         public int WorkOrderId { get; set; }

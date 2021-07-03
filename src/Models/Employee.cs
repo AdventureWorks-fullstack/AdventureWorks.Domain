@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Employee information such as salary, department, and title.
     public partial class Employee
     {
         public Employee()

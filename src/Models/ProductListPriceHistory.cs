@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Changes in the list price of a product over time.
     public partial class ProductListPriceHistory
     {
         public int ProductId { get; set; }

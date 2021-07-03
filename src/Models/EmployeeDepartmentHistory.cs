@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Employee department transfers.
     public partial class EmployeeDepartmentHistory
     {
         public int BusinessEntityId { get; set; }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Transactions for previous years.
     public partial class TransactionHistoryArchive
     {
         public int TransactionId { get; set; }

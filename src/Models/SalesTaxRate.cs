@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Tax rate lookup table.
     public partial class SalesTaxRate
     {
         public int SalesTaxRateId { get; set; }

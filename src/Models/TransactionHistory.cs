@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Record of each purchase order, sales order, or work order transaction year to date.
     public partial class TransactionHistory
     {
         public int TransactionId { get; set; }

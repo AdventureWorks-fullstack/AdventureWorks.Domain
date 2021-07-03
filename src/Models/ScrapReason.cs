@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Manufacturing failure reasons lookup table.
     public partial class ScrapReason
     {
         public ScrapReason()

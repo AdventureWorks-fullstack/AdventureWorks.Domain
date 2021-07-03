@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Individual products associated with a specific sales order. See SalesOrderHeader.
     public partial class SalesOrderDetail
     {
         public int SalesOrderId { get; set; }

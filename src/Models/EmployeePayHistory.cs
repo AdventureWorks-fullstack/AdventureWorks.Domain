@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Employee pay history.
     public partial class EmployeePayHistory
     {
         public int BusinessEntityId { get; set; }

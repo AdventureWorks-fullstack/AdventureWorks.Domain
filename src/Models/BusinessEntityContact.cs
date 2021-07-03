@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Cross-reference table mapping stores, vendors, and employees to people
     public partial class BusinessEntityContact
     {
         public int BusinessEntityId { get; set; }

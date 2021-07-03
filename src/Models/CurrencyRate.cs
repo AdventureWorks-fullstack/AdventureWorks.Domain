@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Currency exchange rates.
     public partial class CurrencyRate
     {
         public CurrencyRate()

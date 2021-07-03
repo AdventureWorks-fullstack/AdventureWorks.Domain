@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // General purchase order information. See PurchaseOrderDetail.
     public partial class PurchaseOrderHeader
     {
         public PurchaseOrderHeader()

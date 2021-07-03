@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Items required to make bicycles and bicycle subassemblies. It identifies the heirarchical relationship between a parent product and its components.
     public partial class BillOfMaterial
     {
         public int BillOfMaterialsId { get; set; }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Shipping company lookup table.
     public partial class ShipMethod
     {
         public ShipMethod()

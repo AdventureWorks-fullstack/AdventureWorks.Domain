@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Unit of measure lookup table.
     public partial class UnitMeasure
     {
         public UnitMeasure()

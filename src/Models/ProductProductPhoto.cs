@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Cross-reference table mapping products and product photos.
     public partial class ProductProductPhoto
     {
         public int ProductId { get; set; }

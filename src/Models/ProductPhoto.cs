@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Product images.
     public partial class ProductPhoto
     {
         public ProductPhoto()

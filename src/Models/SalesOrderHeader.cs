@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // General sales order information.
     public partial class SalesOrderHeader
     {
         public SalesOrderHeader()

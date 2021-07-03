@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Contains online customer orders until the order is submitted or cancelled.
     public partial class ShoppingCartItem
     {
         public int ShoppingCartItemId { get; set; }

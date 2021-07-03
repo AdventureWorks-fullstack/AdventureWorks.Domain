@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Manufacturing work orders.
     public partial class WorkOrder
     {
         public WorkOrder()

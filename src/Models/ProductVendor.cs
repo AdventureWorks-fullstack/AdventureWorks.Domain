@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Cross-reference table mapping vendors with the products they supply.
     public partial class ProductVendor
     {
         public int ProductId { get; set; }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Lookup table containing the departments within the Adventure Works Cycles company.
     public partial class Department
     {
         public Department()

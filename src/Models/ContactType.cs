@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Lookup table containing the types of business entity contacts.
     public partial class ContactType
     {
         public ContactType()

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Sales representative current information.
     public partial class SalesPerson
     {
         public SalesPerson()

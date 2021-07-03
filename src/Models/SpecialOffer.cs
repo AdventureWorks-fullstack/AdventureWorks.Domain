@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Sale discounts lookup table.
     public partial class SpecialOffer
     {
         public SpecialOffer()

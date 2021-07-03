@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Product descriptions in several languages.
     public partial class ProductDescription
     {
         public ProductDescription()

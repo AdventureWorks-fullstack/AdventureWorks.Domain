@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Current customer information. Also see the Person and Store tables.
     public partial class Customer
     {
         public Customer()

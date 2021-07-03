@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Source of the ID that connects vendors, customers, and employees with address and contact information.
     public partial class BusinessEntity
     {
         public BusinessEntity()

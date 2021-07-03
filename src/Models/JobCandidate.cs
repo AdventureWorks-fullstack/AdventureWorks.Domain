@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Résumés submitted to Human Resources by job applicants.
     public partial class JobCandidate
     {
         public int JobCandidateId { get; set; }

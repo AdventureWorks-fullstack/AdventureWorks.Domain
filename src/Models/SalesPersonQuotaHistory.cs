@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Sales performance tracking.
     public partial class SalesPersonQuotaHistory
     {
         public int BusinessEntityId { get; set; }

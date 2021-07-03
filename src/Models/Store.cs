@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Customers (resellers) of Adventure Works products.
     public partial class Store
     {
         public Store()

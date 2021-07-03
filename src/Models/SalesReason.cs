@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Lookup table of customer purchase reasons.
     public partial class SalesReason
     {
         public SalesReason()

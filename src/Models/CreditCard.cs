@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Customer credit card information.
     public partial class CreditCard
     {
         public CreditCard()

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Telephone number and type of a person.
     public partial class PersonPhone
     {
         public int BusinessEntityId { get; set; }

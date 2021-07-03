@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Types of addresses stored in the Address table. 
     public partial class AddressType
     {
         public AddressType()

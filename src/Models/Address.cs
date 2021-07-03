@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Street address information for customers, employees, and vendors.
     public partial class Address
     {
         public Address()

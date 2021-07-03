@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Product inventory information.
     public partial class ProductInventory
     {
         public int ProductId { get; set; }

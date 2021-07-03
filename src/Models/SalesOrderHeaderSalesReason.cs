@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Cross-reference table mapping sales orders to sales reason codes.
     public partial class SalesOrderHeaderSalesReason
     {
         public int SalesOrderId { get; set; }

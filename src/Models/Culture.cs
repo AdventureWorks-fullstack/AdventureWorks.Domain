@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Lookup table containing the languages in which some AdventureWorks data is stored.
     public partial class Culture
     {
         public Culture()

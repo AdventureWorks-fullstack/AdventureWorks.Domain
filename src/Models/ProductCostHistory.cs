@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorks.Domain.Models
 {
+    // Changes in the cost of a product over time.
     public partial class ProductCostHistory
     {
         public int ProductId { get; set; }
