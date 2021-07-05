@@ -1,0 +1,5 @@
+ALTER TABLE Production.ProductInventory
+DROP constraint CK_ProductInventory_Shelf;
+
+ALTER TABLE Production.ProductInventory
+DROP constraint CK_ProductInventory_Bin;

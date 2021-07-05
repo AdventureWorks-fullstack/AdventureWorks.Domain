@@ -1601,8 +1601,6 @@ namespace AdventureWorks.Domain
                     .HasColumnName("LocationID")
                     .HasComment("Inventory location identification number. Foreign key to Location.LocationID. ");
 
-                entity.Property(e => e.Bin).HasComment("Storage container on a shelf in an inventory location.");
-
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())")
@@ -1614,11 +1612,6 @@ namespace AdventureWorks.Domain
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
                     .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
-
-                entity.Property(e => e.Shelf)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasComment("Storage compartment within an inventory location.");
 
                 entity.HasOne(d => d.Location)
                     .WithMany(p => p.ProductInventories)
