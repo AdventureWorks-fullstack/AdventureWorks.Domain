@@ -1,1 +1,0 @@
-INSERT INTO Production.Location (Name) VALUES ('Webshop Warehouse');
