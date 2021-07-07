@@ -14,8 +14,8 @@ namespace AdventureWorks.Domain
         {
         }
 
-        public virtual DbSet<LocationInventoryHistory> LocationInventoryHistories { get; set; }
-        public virtual DbSet<LocationInventory> LocationInventories { get; set; }
+        //public virtual DbSet<InventoryHistory> InventoryHistories { get; set; }
+        //public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AddressType> AddressTypes { get; set; }
         public virtual DbSet<AwbuildVersion> AwbuildVersions { get; set; }

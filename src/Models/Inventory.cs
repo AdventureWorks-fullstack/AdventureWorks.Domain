@@ -1,23 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AdventureWorks.Domain.Models
 {
-    [Table(nameof(LocationInventory), Schema = "Production")]
-    public class LocationInventory
+    [Table(nameof(Inventory), Schema = "Production")]
+    public class Inventory
     {
-        public LocationInventory()
+        public Inventory()
         {
             ProductInventory = new HashSet<ProductInventory>();
-            LocationInventoryHistory = new HashSet<LocationInventoryHistory>();
+            InventoryHistory = new HashSet<InventoryHistory>();
         }
 
-
-        public string LocationInventoryId { get; set; }
+        [Key]
+        public string InventoryId { get; set; }
+        [ForeignKey(nameof(Models.Location))]
         public short LocationId { get; set; }
 
         public virtual Location Location { get; set; }
-        public virtual ICollection<LocationInventoryHistory> LocationInventoryHistory { get; set; }
+        public virtual ICollection<InventoryHistory> InventoryHistory { get; set; }
         public virtual ICollection<ProductInventory> ProductInventory { get; set; }
     }
 }

@@ -1092,6 +1092,67 @@ namespace AdventureWorks.Domain.Migrations
                         .HasComment("Bicycle assembly diagrams.");
                 });
 
+            modelBuilder.Entity("AdventureWorks.Domain.Models.Inventory", b =>
+                {
+                    b.Property<string>("InventoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<short>("LocationId")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("InventoryId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Inventory", "Production");
+                });
+
+            modelBuilder.Entity("AdventureWorks.Domain.Models.InventoryHistory", b =>
+                {
+                    b.Property<int>("InventoryHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BusinessEntityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InventoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<short>("LocationId")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<short?>("ProductInventoryLocationId")
+                        .HasColumnType("smallint");
+
+                    b.Property<int?>("ProductInventoryProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("InventoryHistoryId");
+
+                    b.HasIndex("BusinessEntityId");
+
+                    b.HasIndex("InventoryId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductInventoryProductId", "ProductInventoryLocationId");
+
+                    b.ToTable("InventoryHistory", "Production");
+                });
+
             modelBuilder.Entity("AdventureWorks.Domain.Models.JobCandidate", b =>
                 {
                     b.Property<int>("JobCandidateId")
@@ -1168,65 +1229,6 @@ namespace AdventureWorks.Domain.Migrations
 
                     b
                         .HasComment("Product inventory and manufacturing locations.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.LocationInventory", b =>
-                {
-                    b.Property<string>("LocationInventoryId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<short>("LocationId")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("LocationInventoryId");
-
-                    b.HasIndex("LocationId");
-
-                    b.ToTable("LocationInventory", "Production");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.LocationInventoryHistory", b =>
-                {
-                    b.Property<int>("LocationInventoryHistoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<short>("LocationId")
-                        .HasColumnType("smallint");
-
-                    b.Property<string>("LocationInventoryId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("MovedHereEmployeeBusinessEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("MovedHereWhen")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<short?>("ProductInventoryLocationId")
-                        .HasColumnType("smallint");
-
-                    b.Property<int?>("ProductInventoryProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LocationInventoryHistoryId");
-
-                    b.HasIndex("LocationInventoryId");
-
-                    b.HasIndex("MovedHereEmployeeBusinessEntityId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductInventoryProductId", "ProductInventoryLocationId");
-
-                    b.ToTable("LocationInventoryHistory", "Production");
                 });
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.Password", b =>
@@ -1745,7 +1747,7 @@ namespace AdventureWorks.Domain.Migrations
                         .HasColumnName("LocationID")
                         .HasComment("Inventory location identification number. Foreign key to Location.LocationID. ");
 
-                    b.Property<string>("LocationInventoryId")
+                    b.Property<string>("InventoryId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ModifiedDate")
@@ -1768,9 +1770,9 @@ namespace AdventureWorks.Domain.Migrations
                     b.HasKey("ProductId", "LocationId")
                         .HasName("PK_ProductInventory_ProductID_LocationID");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("InventoryId");
 
-                    b.HasIndex("LocationInventoryId");
+                    b.HasIndex("LocationId");
 
                     b.ToTable("ProductInventory", "Production");
 
@@ -3906,19 +3908,10 @@ namespace AdventureWorks.Domain.Migrations
                     b.Navigation("BusinessEntity");
                 });
 
-            modelBuilder.Entity("AdventureWorks.Domain.Models.JobCandidate", b =>
-                {
-                    b.HasOne("AdventureWorks.Domain.Models.Employee", "BusinessEntity")
-                        .WithMany("JobCandidates")
-                        .HasForeignKey("BusinessEntityId");
-
-                    b.Navigation("BusinessEntity");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.LocationInventory", b =>
+            modelBuilder.Entity("AdventureWorks.Domain.Models.Inventory", b =>
                 {
                     b.HasOne("AdventureWorks.Domain.Models.Location", "Location")
-                        .WithMany("LocationInventory")
+                        .WithMany("Inventory")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -3926,15 +3919,23 @@ namespace AdventureWorks.Domain.Migrations
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("AdventureWorks.Domain.Models.LocationInventoryHistory", b =>
+            modelBuilder.Entity("AdventureWorks.Domain.Models.InventoryHistory", b =>
                 {
-                    b.HasOne("AdventureWorks.Domain.Models.LocationInventory", "LocationInventory")
-                        .WithMany("LocationInventoryHistory")
-                        .HasForeignKey("LocationInventoryId");
-
-                    b.HasOne("AdventureWorks.Domain.Models.Employee", "MovedHereEmployee")
+                    b.HasOne("AdventureWorks.Domain.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("MovedHereEmployeeBusinessEntityId");
+                        .HasForeignKey("BusinessEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdventureWorks.Domain.Models.Inventory", "Inventory")
+                        .WithMany("InventoryHistory")
+                        .HasForeignKey("InventoryId");
+
+                    b.HasOne("AdventureWorks.Domain.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AdventureWorks.Domain.Models.Product", "Product")
                         .WithMany()
@@ -3943,14 +3944,25 @@ namespace AdventureWorks.Domain.Migrations
                         .IsRequired();
 
                     b.HasOne("AdventureWorks.Domain.Models.ProductInventory", null)
-                        .WithMany("LocationInventoryHistories")
+                        .WithMany("InventoryHistory")
                         .HasForeignKey("ProductInventoryProductId", "ProductInventoryLocationId");
 
-                    b.Navigation("LocationInventory");
+                    b.Navigation("Employee");
 
-                    b.Navigation("MovedHereEmployee");
+                    b.Navigation("Inventory");
+
+                    b.Navigation("Location");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("AdventureWorks.Domain.Models.JobCandidate", b =>
+                {
+                    b.HasOne("AdventureWorks.Domain.Models.Employee", "BusinessEntity")
+                        .WithMany("JobCandidates")
+                        .HasForeignKey("BusinessEntityId");
+
+                    b.Navigation("BusinessEntity");
                 });
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.Password", b =>
@@ -4046,23 +4058,23 @@ namespace AdventureWorks.Domain.Migrations
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.ProductInventory", b =>
                 {
+                    b.HasOne("AdventureWorks.Domain.Models.Inventory", "Inventory")
+                        .WithMany("ProductInventory")
+                        .HasForeignKey("InventoryId");
+
                     b.HasOne("AdventureWorks.Domain.Models.Location", "Location")
                         .WithMany("ProductInventories")
                         .HasForeignKey("LocationId")
                         .IsRequired();
-
-                    b.HasOne("AdventureWorks.Domain.Models.LocationInventory", "LocationInventory")
-                        .WithMany("ProductInventory")
-                        .HasForeignKey("LocationInventoryId");
 
                     b.HasOne("AdventureWorks.Domain.Models.Product", "Product")
                         .WithMany("ProductInventories")
                         .HasForeignKey("ProductId")
                         .IsRequired();
 
-                    b.Navigation("Location");
+                    b.Navigation("Inventory");
 
-                    b.Navigation("LocationInventory");
+                    b.Navigation("Location");
 
                     b.Navigation("Product");
                 });
@@ -4591,20 +4603,20 @@ namespace AdventureWorks.Domain.Migrations
                     b.Navigation("ProductModelIllustrations");
                 });
 
+            modelBuilder.Entity("AdventureWorks.Domain.Models.Inventory", b =>
+                {
+                    b.Navigation("InventoryHistory");
+
+                    b.Navigation("ProductInventory");
+                });
+
             modelBuilder.Entity("AdventureWorks.Domain.Models.Location", b =>
                 {
-                    b.Navigation("LocationInventory");
+                    b.Navigation("Inventory");
 
                     b.Navigation("ProductInventories");
 
                     b.Navigation("WorkOrderRoutings");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.LocationInventory", b =>
-                {
-                    b.Navigation("LocationInventoryHistory");
-
-                    b.Navigation("ProductInventory");
                 });
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.Person", b =>
@@ -4672,7 +4684,7 @@ namespace AdventureWorks.Domain.Migrations
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.ProductInventory", b =>
                 {
-                    b.Navigation("LocationInventoryHistories");
+                    b.Navigation("InventoryHistory");
                 });
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.ProductModel", b =>

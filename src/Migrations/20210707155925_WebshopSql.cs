@@ -2,7 +2,7 @@
 
 namespace AdventureWorks.Domain.Migrations
 {
-    public partial class InsertWebshopWarehouse : Migration
+    public partial class WebshopSql : Migration
     {
         private string locationName = "Webshop Warehouse";
 

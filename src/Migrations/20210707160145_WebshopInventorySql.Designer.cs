@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdventureWorks.Domain.Migrations
 {
     [DbContext(typeof(AdventureWorksContext))]
-    [Migration("20210701175001_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210707160145_WebshopInventorySql")]
+    partial class WebshopInventorySql
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1094,6 +1094,67 @@ namespace AdventureWorks.Domain.Migrations
                         .HasComment("Bicycle assembly diagrams.");
                 });
 
+            modelBuilder.Entity("AdventureWorks.Domain.Models.Inventory", b =>
+                {
+                    b.Property<string>("InventoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<short>("LocationId")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("InventoryId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Inventory", "Production");
+                });
+
+            modelBuilder.Entity("AdventureWorks.Domain.Models.InventoryHistory", b =>
+                {
+                    b.Property<int>("InventoryHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BusinessEntityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InventoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<short>("LocationId")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<short?>("ProductInventoryLocationId")
+                        .HasColumnType("smallint");
+
+                    b.Property<int?>("ProductInventoryProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("InventoryHistoryId");
+
+                    b.HasIndex("BusinessEntityId");
+
+                    b.HasIndex("InventoryId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductInventoryProductId", "ProductInventoryLocationId");
+
+                    b.ToTable("InventoryHistory", "Production");
+                });
+
             modelBuilder.Entity("AdventureWorks.Domain.Models.JobCandidate", b =>
                 {
                     b.Property<int>("JobCandidateId")
@@ -1688,9 +1749,8 @@ namespace AdventureWorks.Domain.Migrations
                         .HasColumnName("LocationID")
                         .HasComment("Inventory location identification number. Foreign key to Location.LocationID. ");
 
-                    b.Property<byte>("Bin")
-                        .HasColumnType("tinyint")
-                        .HasComment("Storage container on a shelf in an inventory location.");
+                    b.Property<string>("InventoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ModifiedDate")
                         .ValueGeneratedOnAdd()
@@ -1709,14 +1769,10 @@ namespace AdventureWorks.Domain.Migrations
                         .HasDefaultValueSql("(newid())")
                         .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
-                    b.Property<string>("Shelf")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
-                        .HasComment("Storage compartment within an inventory location.");
-
                     b.HasKey("ProductId", "LocationId")
                         .HasName("PK_ProductInventory_ProductID_LocationID");
+
+                    b.HasIndex("InventoryId");
 
                     b.HasIndex("LocationId");
 
@@ -3472,1267 +3528,6 @@ namespace AdventureWorks.Domain.Migrations
                         .HasComment("Unit of measure lookup table.");
                 });
 
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VAdditionalContactInfo", b =>
-                {
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("City")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("CountryRegion")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)")
-                        .HasColumnName("EMailAddress");
-
-                    b.Property<string>("EmailSpecialInstructions")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("EMailSpecialInstructions");
-
-                    b.Property<string>("EmailTelephoneNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("EMailTelephoneNumber");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("HomeAddressSpecialInstructions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("PostalCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid>("Rowguid")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("rowguid");
-
-                    b.Property<string>("StateProvince")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Street")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TelephoneNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TelephoneSpecialInstructions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView("vAdditionalContactInfo", "Person");
-
-                    b
-                        .HasComment("Displays the contact name and content from each element in the xml column AdditionalContactInfo for that person.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VEmployee", b =>
-                {
-                    b.Property<string>("AdditionalContactInfo")
-                        .HasColumnType("xml");
-
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("CountryRegionName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("EmailPromotion")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("JobTitle")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("PhoneNumberType")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("StateProvinceName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Suffix")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.ToView("vEmployee", "HumanResources");
-
-                    b
-                        .HasComment("Employee names and addresses.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VEmployeeDepartment", b =>
-                {
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("Department")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("GroupName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("JobTitle")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Suffix")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.ToView("vEmployeeDepartment", "HumanResources");
-
-                    b
-                        .HasComment("Returns employee name, title, and current department.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VEmployeeDepartmentHistory", b =>
-                {
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("Department")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("GroupName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Shift")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Suffix")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.ToView("vEmployeeDepartmentHistory", "HumanResources");
-
-                    b
-                        .HasComment("Returns employee name and current and previous departments.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VIndividualCustomer", b =>
-                {
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("AddressType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("CountryRegionName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Demographics")
-                        .HasColumnType("xml");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("EmailPromotion")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("PhoneNumberType")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("StateProvinceName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Suffix")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.ToView("vIndividualCustomer", "Sales");
-
-                    b
-                        .HasComment("Individual customers (names and addresses) that purchase Adventure Works Cycles products online.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VJobCandidate", b =>
-                {
-                    b.Property<string>("AddrLocCity")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Addr.Loc.City");
-
-                    b.Property<string>("AddrLocCountryRegion")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Addr.Loc.CountryRegion");
-
-                    b.Property<string>("AddrLocState")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Addr.Loc.State");
-
-                    b.Property<string>("AddrPostalCode")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("Addr.PostalCode");
-
-                    b.Property<string>("AddrType")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("Addr.Type");
-
-                    b.Property<int?>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("EMail");
-
-                    b.Property<int>("JobCandidateId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("JobCandidateID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("NameFirst")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("Name.First");
-
-                    b.Property<string>("NameLast")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("Name.Last");
-
-                    b.Property<string>("NameMiddle")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("Name.Middle");
-
-                    b.Property<string>("NamePrefix")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("Name.Prefix");
-
-                    b.Property<string>("NameSuffix")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("Name.Suffix");
-
-                    b.Property<string>("Skills")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WebSite")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView("vJobCandidate", "HumanResources");
-
-                    b
-                        .HasComment("Job candidate names and resumes.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VJobCandidateEducation", b =>
-                {
-                    b.Property<string>("EduDegree")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Edu.Degree");
-
-                    b.Property<DateTime?>("EduEndDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("Edu.EndDate");
-
-                    b.Property<string>("EduGpa")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)")
-                        .HasColumnName("Edu.GPA");
-
-                    b.Property<string>("EduGpascale")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)")
-                        .HasColumnName("Edu.GPAScale");
-
-                    b.Property<string>("EduLevel")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Edu.Level");
-
-                    b.Property<string>("EduLocCity")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Edu.Loc.City");
-
-                    b.Property<string>("EduLocCountryRegion")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Edu.Loc.CountryRegion");
-
-                    b.Property<string>("EduLocState")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Edu.Loc.State");
-
-                    b.Property<string>("EduMajor")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Edu.Major");
-
-                    b.Property<string>("EduMinor")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Edu.Minor");
-
-                    b.Property<string>("EduSchool")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Edu.School");
-
-                    b.Property<DateTime?>("EduStartDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("Edu.StartDate");
-
-                    b.Property<int>("JobCandidateId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("JobCandidateID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.ToView("vJobCandidateEducation", "HumanResources");
-
-                    b
-                        .HasComment("Displays the content from each education related element in the xml column Resume in the HumanResources.JobCandidate table. The content has been localized into French, Simplified Chinese and Thai. Some data may not display correctly unless supplemental language support is installed.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VJobCandidateEmployment", b =>
-                {
-                    b.Property<DateTime?>("EmpEndDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("Emp.EndDate");
-
-                    b.Property<string>("EmpFunctionCategory")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Emp.FunctionCategory");
-
-                    b.Property<string>("EmpIndustryCategory")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Emp.IndustryCategory");
-
-                    b.Property<string>("EmpJobTitle")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Emp.JobTitle");
-
-                    b.Property<string>("EmpLocCity")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Emp.Loc.City");
-
-                    b.Property<string>("EmpLocCountryRegion")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Emp.Loc.CountryRegion");
-
-                    b.Property<string>("EmpLocState")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Emp.Loc.State");
-
-                    b.Property<string>("EmpOrgName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Emp.OrgName");
-
-                    b.Property<string>("EmpResponsibility")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Emp.Responsibility");
-
-                    b.Property<DateTime?>("EmpStartDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("Emp.StartDate");
-
-                    b.Property<int>("JobCandidateId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("JobCandidateID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.ToView("vJobCandidateEmployment", "HumanResources");
-
-                    b
-                        .HasComment("Displays the content from each employement history related element in the xml column Resume in the HumanResources.JobCandidate table. The content has been localized into French, Simplified Chinese and Thai. Some data may not display correctly unless supplemental language support is installed.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VPersonDemographic", b =>
-                {
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<DateTime?>("DateFirstPurchase")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Education")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Gender")
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
-
-                    b.Property<bool?>("HomeOwnerFlag")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaritalStatus")
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
-
-                    b.Property<int?>("NumberCarsOwned")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumberChildrenAtHome")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Occupation")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int?>("TotalChildren")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("TotalPurchaseYtd")
-                        .HasColumnType("money")
-                        .HasColumnName("TotalPurchaseYTD");
-
-                    b.Property<string>("YearlyIncome")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.ToView("vPersonDemographics", "Sales");
-
-                    b
-                        .HasComment("Displays the content from each element in the xml column Demographics for each customer in the Person.Person table.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VProductAndDescription", b =>
-                {
-                    b.Property<string>("CultureId")
-                        .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("nchar(6)")
-                        .HasColumnName("CultureID")
-                        .IsFixedLength(true);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("ProductID");
-
-                    b.Property<string>("ProductModel")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.ToView("vProductAndDescription", "Production");
-
-                    b
-                        .HasComment("Product names and descriptions. Product descriptions are provided in multiple languages.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VProductModelCatalogDescription", b =>
-                {
-                    b.Property<string>("BikeFrame")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Color")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Copyright")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Crankset")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("MaintenanceDescription")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Manufacturer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Material")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NoOfYears")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Pedal")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PictureAngle")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PictureSize")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("ProductLine")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("ProductModelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ProductModelID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ProductPhotoId")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("ProductPhotoID");
-
-                    b.Property<string>("ProductUrl")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("ProductURL");
-
-                    b.Property<string>("RiderExperience")
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
-                    b.Property<Guid>("Rowguid")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("rowguid");
-
-                    b.Property<string>("Saddle")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Style")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WarrantyDescription")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("WarrantyPeriod")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Wheel")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.ToView("vProductModelCatalogDescription", "Production");
-
-                    b
-                        .HasComment("Displays the content from each element in the xml column CatalogDescription for each product in the Production.ProductModel table that has catalog data.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VProductModelInstruction", b =>
-                {
-                    b.Property<string>("Instructions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("LaborHours")
-                        .HasColumnType("decimal(9,4)");
-
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int")
-                        .HasColumnName("LocationID");
-
-                    b.Property<int?>("LotSize")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("MachineHours")
-                        .HasColumnType("decimal(9,4)");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("ProductModelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ProductModelID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<Guid>("Rowguid")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("rowguid");
-
-                    b.Property<decimal?>("SetupHours")
-                        .HasColumnType("decimal(9,4)");
-
-                    b.Property<string>("Step")
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
-                    b.ToView("vProductModelInstructions", "Production");
-
-                    b
-                        .HasComment("Displays the content from each element in the xml column Instructions for each product in the Production.ProductModel table that has manufacturing instructions.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VSalesPerson", b =>
-                {
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("CountryRegionName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("EmailPromotion")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("JobTitle")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("PhoneNumberType")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<decimal>("SalesLastYear")
-                        .HasColumnType("money");
-
-                    b.Property<decimal?>("SalesQuota")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("SalesYtd")
-                        .HasColumnType("money")
-                        .HasColumnName("SalesYTD");
-
-                    b.Property<string>("StateProvinceName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Suffix")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("TerritoryGroup")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TerritoryName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.ToView("vSalesPerson", "Sales");
-
-                    b
-                        .HasComment("Sales representiatives (names and addresses) and their sales-related information.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VSalesPersonSalesByFiscalYear", b =>
-                {
-                    b.Property<string>("FullName")
-                        .HasMaxLength(152)
-                        .HasColumnType("nvarchar(152)");
-
-                    b.Property<string>("JobTitle")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("SalesPersonId")
-                        .HasColumnType("int")
-                        .HasColumnName("SalesPersonID");
-
-                    b.Property<string>("SalesTerritory")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal?>("_2002")
-                        .HasColumnType("money")
-                        .HasColumnName("2002");
-
-                    b.Property<decimal?>("_2003")
-                        .HasColumnType("money")
-                        .HasColumnName("2003");
-
-                    b.Property<decimal?>("_2004")
-                        .HasColumnType("money")
-                        .HasColumnName("2004");
-
-                    b.ToView("vSalesPersonSalesByFiscalYears", "Sales");
-
-                    b
-                        .HasComment("Uses PIVOT to return aggregated sales information for each sales representative.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VStateProvinceCountryRegion", b =>
-                {
-                    b.Property<string>("CountryRegionCode")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("CountryRegionName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsOnlyStateProvinceFlag")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("StateProvinceCode")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nchar(3)")
-                        .IsFixedLength(true);
-
-                    b.Property<int>("StateProvinceId")
-                        .HasColumnType("int")
-                        .HasColumnName("StateProvinceID");
-
-                    b.Property<string>("StateProvinceName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("TerritoryId")
-                        .HasColumnType("int")
-                        .HasColumnName("TerritoryID");
-
-                    b.ToView("vStateProvinceCountryRegion", "Person");
-
-                    b
-                        .HasComment("Joins StateProvince table with CountryRegion table.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VStoreWithAddress", b =>
-                {
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("AddressType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("CountryRegionName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("StateProvinceName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.ToView("vStoreWithAddresses", "Sales");
-
-                    b
-                        .HasComment("Stores (including store addresses) that sell Adventure Works Cycles products to consumers.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VStoreWithContact", b =>
-                {
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("ContactType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("EmailPromotion")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("PhoneNumberType")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Suffix")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.ToView("vStoreWithContacts", "Sales");
-
-                    b
-                        .HasComment("Stores (including store contacts) that sell Adventure Works Cycles products to consumers.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VStoreWithDemographic", b =>
-                {
-                    b.Property<decimal?>("AnnualRevenue")
-                        .HasColumnType("money");
-
-                    b.Property<decimal?>("AnnualSales")
-                        .HasColumnType("money");
-
-                    b.Property<string>("BankName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Brands")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("BusinessType")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
-
-                    b.Property<string>("Internet")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("NumberEmployees")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Specialty")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("SquareFeet")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("YearOpened")
-                        .HasColumnType("int");
-
-                    b.ToView("vStoreWithDemographics", "Sales");
-
-                    b
-                        .HasComment("Stores (including demographics) that sell Adventure Works Cycles products to consumers.");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VVendorWithAddress", b =>
-                {
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("AddressType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("CountryRegionName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("StateProvinceName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.ToView("vVendorWithAddresses", "Purchasing");
-
-                    b
-                        .HasComment("Vendor (company) names and addresses .");
-                });
-
-            modelBuilder.Entity("AdventureWorks.Domain.Models.VVendorWithContact", b =>
-                {
-                    b.Property<int>("BusinessEntityId")
-                        .HasColumnType("int")
-                        .HasColumnName("BusinessEntityID");
-
-                    b.Property<string>("ContactType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("EmailPromotion")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("PhoneNumberType")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Suffix")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.ToView("vVendorWithContacts", "Purchasing");
-
-                    b
-                        .HasComment("Vendor (company) names  and the names of vendor employees to contact.");
-                });
-
             modelBuilder.Entity("AdventureWorks.Domain.Models.Vendor", b =>
                 {
                     b.Property<int>("BusinessEntityId")
@@ -5115,6 +3910,54 @@ namespace AdventureWorks.Domain.Migrations
                     b.Navigation("BusinessEntity");
                 });
 
+            modelBuilder.Entity("AdventureWorks.Domain.Models.Inventory", b =>
+                {
+                    b.HasOne("AdventureWorks.Domain.Models.Location", "Location")
+                        .WithMany("Inventory")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("AdventureWorks.Domain.Models.InventoryHistory", b =>
+                {
+                    b.HasOne("AdventureWorks.Domain.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("BusinessEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdventureWorks.Domain.Models.Inventory", "Inventory")
+                        .WithMany("InventoryHistory")
+                        .HasForeignKey("InventoryId");
+
+                    b.HasOne("AdventureWorks.Domain.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdventureWorks.Domain.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdventureWorks.Domain.Models.ProductInventory", null)
+                        .WithMany("InventoryHistory")
+                        .HasForeignKey("ProductInventoryProductId", "ProductInventoryLocationId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Inventory");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("AdventureWorks.Domain.Models.JobCandidate", b =>
                 {
                     b.HasOne("AdventureWorks.Domain.Models.Employee", "BusinessEntity")
@@ -5217,6 +4060,10 @@ namespace AdventureWorks.Domain.Migrations
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.ProductInventory", b =>
                 {
+                    b.HasOne("AdventureWorks.Domain.Models.Inventory", "Inventory")
+                        .WithMany("ProductInventory")
+                        .HasForeignKey("InventoryId");
+
                     b.HasOne("AdventureWorks.Domain.Models.Location", "Location")
                         .WithMany("ProductInventories")
                         .HasForeignKey("LocationId")
@@ -5226,6 +4073,8 @@ namespace AdventureWorks.Domain.Migrations
                         .WithMany("ProductInventories")
                         .HasForeignKey("ProductId")
                         .IsRequired();
+
+                    b.Navigation("Inventory");
 
                     b.Navigation("Location");
 
@@ -5387,6 +4236,12 @@ namespace AdventureWorks.Domain.Migrations
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.SalesOrderDetail", b =>
                 {
+                    b.HasOne("AdventureWorks.Domain.Models.Product", "Product")
+                        .WithMany("SalesOrderDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AdventureWorks.Domain.Models.SalesOrderHeader", "SalesOrder")
                         .WithMany("SalesOrderDetails")
                         .HasForeignKey("SalesOrderId")
@@ -5398,6 +4253,8 @@ namespace AdventureWorks.Domain.Migrations
                         .HasForeignKey("SpecialOfferId", "ProductId")
                         .HasConstraintName("FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID")
                         .IsRequired();
+
+                    b.Navigation("Product");
 
                     b.Navigation("SalesOrder");
 
@@ -5748,8 +4605,17 @@ namespace AdventureWorks.Domain.Migrations
                     b.Navigation("ProductModelIllustrations");
                 });
 
+            modelBuilder.Entity("AdventureWorks.Domain.Models.Inventory", b =>
+                {
+                    b.Navigation("InventoryHistory");
+
+                    b.Navigation("ProductInventory");
+                });
+
             modelBuilder.Entity("AdventureWorks.Domain.Models.Location", b =>
                 {
+                    b.Navigation("Inventory");
+
                     b.Navigation("ProductInventories");
 
                     b.Navigation("WorkOrderRoutings");
@@ -5797,6 +4663,8 @@ namespace AdventureWorks.Domain.Migrations
 
                     b.Navigation("PurchaseOrderDetails");
 
+                    b.Navigation("SalesOrderDetails");
+
                     b.Navigation("ShoppingCartItems");
 
                     b.Navigation("SpecialOfferProducts");
@@ -5814,6 +4682,11 @@ namespace AdventureWorks.Domain.Migrations
             modelBuilder.Entity("AdventureWorks.Domain.Models.ProductDescription", b =>
                 {
                     b.Navigation("ProductModelProductDescriptionCultures");
+                });
+
+            modelBuilder.Entity("AdventureWorks.Domain.Models.ProductInventory", b =>
+                {
+                    b.Navigation("InventoryHistory");
                 });
 
             modelBuilder.Entity("AdventureWorks.Domain.Models.ProductModel", b =>

@@ -12,7 +12,7 @@ namespace AdventureWorks.Domain.Models
         {
             ProductInventories = new HashSet<ProductInventory>();
             WorkOrderRoutings = new HashSet<WorkOrderRouting>();
-            LocationInventory = new HashSet<LocationInventory>();
+            Inventory = new HashSet<Inventory>();
         }
 
         public short LocationId { get; set; }
@@ -23,6 +23,6 @@ namespace AdventureWorks.Domain.Models
 
         public virtual ICollection<ProductInventory> ProductInventories { get; set; }
         public virtual ICollection<WorkOrderRouting> WorkOrderRoutings { get; set; }
-        public virtual ICollection<LocationInventory> LocationInventory { get; set; }
+        public virtual ICollection<Inventory> Inventory { get; set; }
     }
 }
